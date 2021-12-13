@@ -5,7 +5,7 @@ class Interpreter(val text: String) {
     private var pos: Int = 0
     private var currentToken: Token? = null
 
-    private fun getNextToken(): Token? {
+    fun getNextToken(): Token? {
         if (pos > text.length - 1) {
             return Token(TokenType.EOS, null)
         }
@@ -27,12 +27,12 @@ class Interpreter(val text: String) {
 
     private fun eat() {
         currentToken = getNextToken()
+
+        if(currentToken == null) throw InterpreterException("Error parsing input")
     }
 
     fun expr(): Int {
-        currentToken = getNextToken()
-
-        if(currentToken == null) throw InterpreterException("Error parsing input")
+        eat()
 
         val left = currentToken
         eat()
