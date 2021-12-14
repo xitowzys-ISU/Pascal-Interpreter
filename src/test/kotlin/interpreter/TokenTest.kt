@@ -6,15 +6,15 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 
 internal class TokenTest {
-    lateinit var interpreter: Interpreter
 
     @Test
     @DisplayName("toString() `Token output to string`")
     fun testToString() {
-        interpreter = Interpreter("3+5")
+
+        val laxer = Lexer("3+5")
 
         assertAll({
-            assertEquals("Token(INTENGER, 3)", interpreter.getNextToken().toString())
+            assertEquals("Token(INTENGER, 3)", laxer.getNextToken().toString())
         })
     }
 }

@@ -21,35 +21,6 @@ internal class InterpreterTest {
     }
 
     @Test
-    @DisplayName("getNextToken() `Check the lexer 3+5`")
-    fun lexer() {
-        interpreter = Interpreter("3+5")
-
-        assertAll({
-            assertAll({
-                val token = interpreter.getNextToken()
-                assertEquals(TokenType.INTENGER, token!!.type)
-                assertEquals("3", token.value)
-            })
-            assertAll({
-                val token = interpreter.getNextToken()
-                assertEquals(TokenType.PLUS, token!!.type)
-                assertEquals("+", token.value)
-            })
-            assertAll({
-                val token = interpreter.getNextToken()
-                assertEquals(TokenType.INTENGER, token!!.type)
-                assertEquals("5", token.value)
-            })
-            assertAll({
-                val token = interpreter.getNextToken()
-                assertEquals(TokenType.EOS, token!!.type)
-                assertNull(null)
-            })
-        })
-    }
-
-    @Test
     @DisplayName("expr() `Single-line examples. With spaces`")
     fun exprTestOne() {
         val listTokenType = listOf(
