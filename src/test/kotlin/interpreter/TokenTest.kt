@@ -9,7 +9,7 @@ internal class TokenTest {
     lateinit var interpreter: Interpreter
 
     @Test
-    @DisplayName("Token output to string")
+    @DisplayName("toString() `Token output to string`")
     fun testToString() {
         interpreter = Interpreter("3+5")
 

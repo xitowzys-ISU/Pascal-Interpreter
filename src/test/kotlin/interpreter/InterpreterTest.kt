@@ -10,8 +10,8 @@ internal class InterpreterTest {
     lateinit var interpreter: Interpreter
 
     @Test
-    @DisplayName("Exception error parsing input")
-    fun exceptionExpr() {
+    @DisplayName("eat() `Exception error parsing input`")
+    fun exceptionEat() {
         interpreter = Interpreter("3_5")
         val exception: Exception = assertThrows(InterpreterException::class.java) {
             interpreter.expr()
@@ -21,7 +21,7 @@ internal class InterpreterTest {
     }
 
     @Test
-    @DisplayName("Check the lexer 3+5")
+    @DisplayName("getNextToken() `Check the lexer 3+5`")
     fun lexer() {
         interpreter = Interpreter("3+5")
 
@@ -50,8 +50,8 @@ internal class InterpreterTest {
     }
 
     @Test
-    @DisplayName("Check the correct expr response")
-    fun expr() {
+    @DisplayName("expr() `Single-line examples. With spaces`")
+    fun exprTestOne() {
         val listTokenType = listOf(
             TokenType.PLUS,
             TokenType.MINUS
@@ -77,6 +77,40 @@ internal class InterpreterTest {
 
             interpreter = Interpreter(instance)
             assertEquals(answer, interpreter.expr())
+        }
+    }
+
+    @Test
+    @DisplayName("expr() `Multi-line examples. With spaces`")
+    fun exprTestTwo() {
+        val listTokenType = listOf(
+            TokenType.PLUS,
+            TokenType.MINUS
+        )
+
+        for (i in 0..100) {
+            var answer: Int = (0..99999).random()
+            var instance: String = answer.toString() + " ".repeat((0..25).random())
+
+            for (j in 0..20) {
+                val type = listTokenType.random()
+                val number = (0..99999).random()
+
+                answer = when (type) {
+                    TokenType.PLUS -> answer + number
+                    TokenType.MINUS -> answer - number
+                    else -> {
+                        0
+                    }
+                }
+
+                instance += type.value.toString() + " ".repeat((0..25).random()) + number.toString() + " ".repeat((0..25).random())
+            }
+
+
+            interpreter = Interpreter(instance)
+            assertEquals(answer, interpreter.expr())
+
         }
     }
 }

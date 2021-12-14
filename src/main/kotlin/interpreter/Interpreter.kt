@@ -65,24 +65,31 @@ class Interpreter(val text: String) {
         return Token(TokenType.EOS, TokenType.EOS.value)
     }
 
+    private fun term(): String? {
+        val token = currentToken
+        eat()
+        return token!!.value
+    }
+
     fun expr(): Int {
         eat()
 
-        val left = currentToken
-        eat()
+        var result: Int = term()?.toInt() ?: 0
 
-        val op = currentToken
-        eat()
+        while (currentToken!!.type == TokenType.PLUS || currentToken!!.type == TokenType.MINUS) {
+            val token = currentToken
 
-        val right = currentToken
-        eat()
-
-        val result: Int
-
-        if (op!!.type == TokenType.PLUS) {
-            result = left?.value.toString().toInt() + right?.value.toString().toInt()
-        } else {
-            result = left?.value.toString().toInt() - right?.value.toString().toInt()
+            when (token!!.type) {
+                TokenType.PLUS -> {
+                    eat()
+                    result += term()!!.toInt()
+                }
+                TokenType.MINUS -> {
+                    eat()
+                    result -= term()!!.toInt()
+                }
+                else -> {}
+            }
         }
 
         return result
