@@ -13,13 +13,21 @@ class Lexer(val text: String) {
                 continue
             }
 
-            if (currentChar!!.isDigit()) {
-                return Token(TokenType.INTENGER, integer())
-            }
+            if (currentChar!!.isDigit()) return Token(TokenType.INTENGER, integer())
 
             if (currentChar == '+') {
                 advance()
                 return Token(TokenType.PLUS, TokenType.PLUS.value)
+            }
+
+            if (currentChar == '*') {
+                advance()
+                return Token(TokenType.MUL, TokenType.MUL.value)
+            }
+
+            if (currentChar == '/') {
+                advance()
+                return Token(TokenType.DIV, TokenType.DIV.value)
             }
 
             if (currentChar == '-') {
@@ -34,9 +42,7 @@ class Lexer(val text: String) {
     }
 
     private fun skipWhitespace() {
-        while (currentChar != null && currentChar!!.isWhitespace()) {
-            advance()
-        }
+        while (currentChar != null && currentChar!!.isWhitespace()) advance()
     }
 
     private fun integer(): String {

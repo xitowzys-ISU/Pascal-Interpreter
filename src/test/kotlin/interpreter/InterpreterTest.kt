@@ -21,7 +21,7 @@ internal class InterpreterTest {
     }
 
     @Test
-    @DisplayName("expr() `Single-line examples. With spaces`")
+    @DisplayName("expr() `Single-line examples. With spaces. Plus and minus`")
     fun exprTestOne() {
         val listTokenType = listOf(
             TokenType.PLUS,
@@ -52,7 +52,7 @@ internal class InterpreterTest {
     }
 
     @Test
-    @DisplayName("expr() `Multi-line examples. With spaces`")
+    @DisplayName("expr() `Multi-line examples. With spaces. Plus and minus`")
     fun exprTestTwo() {
         val listTokenType = listOf(
             TokenType.PLUS,
@@ -70,6 +70,40 @@ internal class InterpreterTest {
                 answer = when (type) {
                     TokenType.PLUS -> answer + number
                     TokenType.MINUS -> answer - number
+                    else -> {
+                        0
+                    }
+                }
+
+                instance += type.value.toString() + " ".repeat((0..25).random()) + number.toString() + " ".repeat((0..25).random())
+            }
+
+
+            interpreter = Interpreter(instance)
+            assertEquals(answer, interpreter.expr())
+
+        }
+    }
+
+    @Test
+    @DisplayName("expr() `Multi-line examples. With spaces. Multiplication and division`")
+    fun exprTestThree() {
+        val listTokenType = listOf(
+            TokenType.MUL,
+            TokenType.DIV
+        )
+
+        for (i in 0..100) {
+            var answer: Int = (1..500).random()
+            var instance: String = answer.toString() + " ".repeat((0..25).random())
+
+            for (j in 0..5) {
+                val type = listTokenType.random()
+                val number = (1..500).random()
+
+                answer = when (type) {
+                    TokenType.MUL -> answer * number
+                    TokenType.DIV -> answer / number
                     else -> {
                         0
                     }
