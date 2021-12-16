@@ -4,6 +4,7 @@ import interpreter.Lexer.TokenType
 import interpreter.Parser.BinOp.BinOp
 import interpreter.Parser.BinOp.BinOpNode
 import interpreter.Parser.BinOp.Num
+import interpreter.Parser.BinOp.UnaryOp
 import interpreter.Parser.Parser
 
 class Interpreter(text: String) {
@@ -14,6 +15,9 @@ class Interpreter(text: String) {
         when (node!!::class.simpleName) {
             "BinOpNode" -> {
                 return visitBinOp(node as BinOpNode)
+            }
+            "UnaryOp" -> {
+                return visitUnaryOp(node as UnaryOp)
             }
         }
 
@@ -30,6 +34,14 @@ class Interpreter(text: String) {
         }
 
         return visit(node.left) / visit(node.right)
+    }
+
+    private fun visitUnaryOp(node: UnaryOp): Int {
+        if (node.op!!.type == TokenType.PLUS) {
+            return +visit(node.expr)
+        }
+
+        return -visit(node.expr)
     }
 
     private fun visitNum(node: Num): Int {

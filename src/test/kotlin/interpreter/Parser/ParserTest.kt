@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 
 class ParserTest {
 
-    lateinit var parser: Parser
+    private lateinit var parser: Parser
 
     @Test
     @DisplayName("eat() `Exception error parsing input.`")

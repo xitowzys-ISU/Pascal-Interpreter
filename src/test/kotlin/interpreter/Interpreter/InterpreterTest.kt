@@ -8,7 +8,7 @@ import org.junit.jupiter.api.DisplayName
 
 internal class InterpreterTest {
 
-    lateinit var interpreter: Interpreter
+    private lateinit var interpreter: Interpreter
 
     @Test
     @DisplayName("interpret() `Single-line examples. With spaces. Plus and minus.`")
@@ -124,6 +124,27 @@ internal class InterpreterTest {
             assertAll({
                 interpreter = Interpreter("(12 + 8) - 3")
                 assertEquals(interpreter.interpret(), 17)
+            })
+        })
+
+
+    }
+
+    @Test
+    @DisplayName("interpret() `Multi-line examples. Unary operators`")
+    fun exprTestFive() {
+        assertAll({
+            assertAll({
+                interpreter = Interpreter("--(-10 + 20) * 40 / (2 + 1)")
+                assertEquals(interpreter.interpret(), 133)
+            })
+            assertAll({
+                interpreter = Interpreter("- --2 / 2 - 2 + 3 * ((1 + 1) + (1 + 1))")
+                assertEquals(interpreter.interpret(), 9)
+            })
+            assertAll({
+                interpreter = Interpreter("+-(12 + 8) - 3")
+                assertEquals(interpreter.interpret(), -23)
             })
         })
 

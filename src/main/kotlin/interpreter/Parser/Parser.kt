@@ -6,6 +6,7 @@ import interpreter.Lexer.TokenType
 import interpreter.Parser.BinOp.BinOp
 import interpreter.Parser.BinOp.BinOpNode
 import interpreter.Parser.BinOp.Num
+import interpreter.Parser.BinOp.UnaryOp
 
 class Parser(text: String) {
     private var lexer: Lexer = Lexer(text)
@@ -22,6 +23,19 @@ class Parser(text: String) {
      */
     private fun factor(): BinOp {
         val token = currentToken
+
+        if (token!!.type == TokenType.PLUS) {
+            eat()
+            val node = UnaryOp(token, factor())
+            return node
+        }
+
+        if (token!!.type == TokenType.MINUS) {
+            eat()
+            val node = UnaryOp(token, factor())
+            return node
+        }
+
         if (token!!.type == TokenType.LPAREN) {
             eat()
             val node = expr()
