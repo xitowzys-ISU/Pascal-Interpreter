@@ -1,6 +1,8 @@
 package interpreter
 
-import org.junit.jupiter.api.Assertions
+import interpreter.Interpreter.Interpreter
+import interpreter.Interpreter.InterpreterException
+import interpreter.Lexer.TokenType
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*

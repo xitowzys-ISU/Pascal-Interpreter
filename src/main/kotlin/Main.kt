@@ -1,4 +1,4 @@
-import interpreter.Interpreter
+import interpreter.Interpreter.Interpreter
 
 fun main() {
     var text: String?

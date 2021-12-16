@@ -1,4 +1,8 @@
-package interpreter
+package interpreter.Interpreter
+
+import interpreter.Lexer.Lexer
+import interpreter.Lexer.Token
+import interpreter.Lexer.TokenType
 
 class Interpreter(text: String) {
 

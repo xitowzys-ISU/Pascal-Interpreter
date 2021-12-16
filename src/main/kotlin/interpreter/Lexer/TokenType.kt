@@ -1,4 +1,4 @@
-package interpreter
+package interpreter.Lexer
 
 enum class TokenType(val value: String?) {
     INTENGER(""),

@@ -1,4 +1,4 @@
-package interpreter
+package interpreter.Lexer
 
 class Lexer(val text: String) {
 

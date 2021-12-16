@@ -1,5 +1,6 @@
 package interpreter
 
+import interpreter.Lexer.Lexer
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
