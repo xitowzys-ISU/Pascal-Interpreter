@@ -1,4 +1,4 @@
-package interpreter
+package interpreter.Lexer
 
 import interpreter.Lexer.Lexer
 import interpreter.Lexer.TokenType

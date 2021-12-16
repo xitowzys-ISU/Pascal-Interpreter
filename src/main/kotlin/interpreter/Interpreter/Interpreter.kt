@@ -1,87 +1,43 @@
 package interpreter.Interpreter
 
-import interpreter.Lexer.Lexer
-import interpreter.Lexer.Token
 import interpreter.Lexer.TokenType
+import interpreter.Parser.BinOp.BinOp
+import interpreter.Parser.BinOp.BinOpNode
+import interpreter.Parser.BinOp.Num
+import interpreter.Parser.Parser
 
 class Interpreter(text: String) {
+    private var parser: Parser = Parser(text)
 
-    private var lexer: Lexer = Lexer(text)
-    private var currentToken: Token? = lexer.getNextToken()
+    private fun visit(node: BinOp?): Int {
 
-    private fun eat() {
-        currentToken = lexer.getNextToken()
-
-        if (currentToken == null) throw InterpreterException("Error parsing input")
-    }
-
-    /**
-     * [factor] : INTEGER | LPAREN expr RPAREN"
-     */
-    private fun factor(): String? {
-        val token = currentToken
-        if (token!!.type == TokenType.LPAREN) {
-            eat()
-            val result = expr()
-            eat()
-            return result.toString()
-        }
-
-        eat()
-        return token.value
-    }
-
-    /**
-     * [term] : [factor] ((MUL | DIV) [factor])*
-     */
-    private fun term(): String {
-        var result: Int = factor()?.toInt() ?: throw InterpreterException("Error parsing input")
-
-        while (currentToken!!.type == TokenType.MUL || currentToken!!.type == TokenType.DIV) {
-            val token = currentToken
-
-            when (token!!.type) {
-                TokenType.MUL -> {
-                    eat()
-                    result *= factor()!!.toInt()
-                }
-                TokenType.DIV -> {
-                    eat()
-                    result /= factor()!!.toInt()
-                }
-                else -> {
-                }
+        when (node!!::class.simpleName) {
+            "BinOpNode" -> {
+                return visitBinOp(node as BinOpNode)
             }
         }
 
-        return result.toString()
+        return visitNum(node as Num)
     }
 
-    /**
-     * [term] ((PLUS | MINUS) [term])*
-     */
-    fun expr(): Int {
-//        eat()
-
-        var result: Int = term().toInt()
-
-        while (currentToken!!.type == TokenType.PLUS || currentToken!!.type == TokenType.MINUS) {
-            val token = currentToken
-
-            when (token!!.type) {
-                TokenType.PLUS -> {
-                    eat()
-                    result += term().toInt()
-                }
-                TokenType.MINUS -> {
-                    eat()
-                    result -= term().toInt()
-                }
-                else -> {
-                }
-            }
+    private fun visitBinOp(node: BinOpNode): Int {
+        if (node.op!!.type == TokenType.PLUS) {
+            return visit(node.left) + visit(node.right)
+        } else if (node.op.type == TokenType.MINUS) {
+            return visit(node.left) - visit(node.right)
+        } else if (node.op.type == TokenType.MUL) {
+            return visit(node.left) * visit(node.right)
         }
 
-        return result
+        return visit(node.left) / visit(node.right)
+    }
+
+    private fun visitNum(node: Num): Int {
+        return node.token.value!!.toInt()
+    }
+
+    fun interpret(): Int {
+        val tree = parser.parse()
+        return visit(tree)
     }
 }

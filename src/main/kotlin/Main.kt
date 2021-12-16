@@ -12,8 +12,10 @@ fun main() {
             continue
         } else {
             interpreter = Interpreter(text)
-            result = interpreter.expr()
+            result = interpreter.interpret()
             println(result)
         }
     }
+//    interpreter = Interpreter("1+2+5 * 12")
+//    interpreter.interpret()
 }
