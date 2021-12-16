@@ -6,5 +6,7 @@ enum class TokenType(val value: String?) {
     MINUS("-"),
     MUL("*"),
     DIV("/"),
+    LPAREN("("),
+    RPAREN(")"),
     EOS(null)
 }

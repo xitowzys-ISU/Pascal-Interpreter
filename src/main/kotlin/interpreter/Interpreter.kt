@@ -12,12 +12,19 @@ class Interpreter(text: String) {
     }
 
     /**
-     * [factor] : INTEGER
+     * [factor] : INTEGER | LPAREN expr RPAREN"
      */
     private fun factor(): String? {
         val token = currentToken
+        if (token!!.type == TokenType.LPAREN) {
+            eat()
+            val result = expr()
+            eat()
+            return result.toString()
+        }
+
         eat()
-        return token!!.value
+        return token.value
     }
 
     /**

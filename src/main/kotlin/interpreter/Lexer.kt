@@ -35,6 +35,16 @@ class Lexer(val text: String) {
                 return Token(TokenType.MINUS, TokenType.MINUS.value)
             }
 
+            if (currentChar == '(') {
+                advance()
+                return Token(TokenType.LPAREN, TokenType.LPAREN.value)
+            }
+
+            if (currentChar == ')') {
+                advance()
+                return Token(TokenType.RPAREN, TokenType.RPAREN.value)
+            }
+
             return null
         }
 

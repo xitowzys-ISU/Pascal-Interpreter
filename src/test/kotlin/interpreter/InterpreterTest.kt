@@ -1,5 +1,6 @@
 package interpreter
 
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
@@ -10,7 +11,7 @@ internal class InterpreterTest {
     lateinit var interpreter: Interpreter
 
     @Test
-    @DisplayName("eat() `Exception error parsing input`")
+    @DisplayName("eat() `Exception error parsing input.`")
     fun exceptionEat() {
         interpreter = Interpreter("3_5")
         val exception: Exception = assertThrows(InterpreterException::class.java) {
@@ -21,7 +22,7 @@ internal class InterpreterTest {
     }
 
     @Test
-    @DisplayName("expr() `Single-line examples. With spaces. Plus and minus`")
+    @DisplayName("expr() `Single-line examples. With spaces. Plus and minus.`")
     fun exprTestOne() {
         val listTokenType = listOf(
             TokenType.PLUS,
@@ -52,7 +53,7 @@ internal class InterpreterTest {
     }
 
     @Test
-    @DisplayName("expr() `Multi-line examples. With spaces. Plus and minus`")
+    @DisplayName("expr() `Multi-line examples. With spaces. Plus and minus.`")
     fun exprTestTwo() {
         val listTokenType = listOf(
             TokenType.PLUS,
@@ -86,7 +87,7 @@ internal class InterpreterTest {
     }
 
     @Test
-    @DisplayName("expr() `Multi-line examples. With spaces. Multiplication and division`")
+    @DisplayName("expr() `Multi-line examples. With spaces. Multiplication and division.`")
     fun exprTestThree() {
         val listTokenType = listOf(
             TokenType.MUL,
@@ -117,5 +118,26 @@ internal class InterpreterTest {
             assertEquals(answer, interpreter.expr())
 
         }
+    }
+
+    @Test
+    @DisplayName("expr() `Multi-line examples. With spaces. Plus, minus, multiplication, division, brackets.`")
+    fun exprTestFour() {
+        assertAll({
+            assertAll({
+                interpreter = Interpreter("(10 + 20) * 40 / (2 + 1)")
+                assertEquals(interpreter.expr(), 400)
+            })
+            assertAll({
+                interpreter = Interpreter("2 / 2 - 2 + 3 * ((1 + 1) + (1 + 1))")
+                assertEquals(interpreter.expr(), 11)
+            })
+            assertAll({
+                interpreter = Interpreter("(12 + 8) - 3")
+                assertEquals(interpreter.expr(), 17)
+            })
+        })
+
+
     }
 }
