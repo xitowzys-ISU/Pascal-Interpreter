@@ -19,6 +19,41 @@ class Parser(text: String) {
     }
 
     /**
+     * Grammar: "[program] : [compoundStatement] DOT"
+     */
+    private fun program() {}
+
+    /**
+     * Grammar: "[compoundStatement]: BEGIN [statementList] END"
+     */
+    private fun compoundStatement() {}
+
+    /**
+     * Grammar: "[statementList] : [statement] | [statement] SEMI [statementList]"
+     */
+    private fun statementList() {}
+
+    /**
+     * Grammar: "[statement] : [compoundStatement] | [assignmentStatement] | [empty]"
+     */
+    private fun statement() {}
+
+    /**
+     * Grammar: [assignmentStatement] : [variable] ASSIGN [expr]
+     */
+    private fun assignmentStatement() {}
+
+    /**
+     * Grammar: "[variable] : ID"
+     */
+    private fun variable() {}
+
+    /**
+     * Grammar: "[empty] : NoOp"
+     */
+    private fun empty() {}
+
+    /**
      * [factor] : INTEGER | LPAREN expr RPAREN"
      */
     private fun factor(): AST {
@@ -77,8 +112,6 @@ class Parser(text: String) {
      * [term] ((PLUS | MINUS) [term])*
      */
     private fun expr(): AST {
-//        eat()
-
         var node: AST = term()
 
         while (currentToken!!.type == ArithmeticOperators.PLUS || currentToken!!.type == ArithmeticOperators.MINUS) {
