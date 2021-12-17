@@ -3,10 +3,10 @@ package interpreter.Parser
 import interpreter.Lexer.Lexer
 import interpreter.Lexer.Token.Token
 import interpreter.Lexer.Token.Enums.ArithmeticOperators
-import interpreter.Parser.BinOp.BinOp
-import interpreter.Parser.BinOp.BinOpNode
-import interpreter.Parser.BinOp.Num
-import interpreter.Parser.BinOp.UnaryOp
+import interpreter.Parser.AST.AST
+import interpreter.Parser.AST.BinOp
+import interpreter.Parser.AST.Num
+import interpreter.Parser.AST.UnaryOp
 
 class Parser(text: String) {
     private var lexer: Lexer = Lexer(text)
@@ -21,7 +21,7 @@ class Parser(text: String) {
     /**
      * [factor] : INTEGER | LPAREN expr RPAREN"
      */
-    private fun factor(): BinOp {
+    private fun factor(): AST {
         val token = currentToken
 
         if (token!!.type == ArithmeticOperators.PLUS) {
@@ -50,8 +50,8 @@ class Parser(text: String) {
     /**
      * [term] : [factor] ((MUL | DIV) [factor])*
      */
-    private fun term(): BinOp {
-        var node: BinOp = factor()
+    private fun term(): AST {
+        var node: AST = factor()
 
         while (currentToken!!.type == ArithmeticOperators.MUL || currentToken!!.type == ArithmeticOperators.DIV) {
             val token = currentToken
@@ -67,7 +67,7 @@ class Parser(text: String) {
                 }
             }
 
-            node = BinOpNode(left = node, op = token, right = factor())
+            node = BinOp(left = node, op = token, right = factor())
         }
 
         return node
@@ -76,10 +76,10 @@ class Parser(text: String) {
     /**
      * [term] ((PLUS | MINUS) [term])*
      */
-    private fun expr(): BinOp {
+    private fun expr(): AST {
 //        eat()
 
-        var node: BinOp = term()
+        var node: AST = term()
 
         while (currentToken!!.type == ArithmeticOperators.PLUS || currentToken!!.type == ArithmeticOperators.MINUS) {
             val token = currentToken
@@ -95,13 +95,13 @@ class Parser(text: String) {
                 }
             }
 
-            node = BinOpNode(left = node, op = token, right = term())
+            node = BinOp(left = node, op = token, right = term())
         }
 
         return node
     }
 
-    fun parse(): BinOp {
+    fun parse(): AST {
         return expr()
     }
 }

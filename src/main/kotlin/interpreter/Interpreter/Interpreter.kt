@@ -1,20 +1,20 @@
 package interpreter.Interpreter
 
 import interpreter.Lexer.Token.Enums.ArithmeticOperators
-import interpreter.Parser.BinOp.BinOp
-import interpreter.Parser.BinOp.BinOpNode
-import interpreter.Parser.BinOp.Num
-import interpreter.Parser.BinOp.UnaryOp
+import interpreter.Parser.AST.AST
+import interpreter.Parser.AST.BinOp
+import interpreter.Parser.AST.Num
+import interpreter.Parser.AST.UnaryOp
 import interpreter.Parser.Parser
 
 class Interpreter(text: String) {
     private var parser: Parser = Parser(text)
 
-    private fun visit(node: BinOp?): Int {
+    private fun visit(node: AST?): Int {
 
         when (node!!::class.simpleName) {
-            "BinOpNode" -> {
-                return visitBinOp(node as BinOpNode)
+            "BinOp" -> {
+                return visitBinOp(node as BinOp)
             }
             "UnaryOp" -> {
                 return visitUnaryOp(node as UnaryOp)
@@ -24,7 +24,7 @@ class Interpreter(text: String) {
         return visitNum(node as Num)
     }
 
-    private fun visitBinOp(node: BinOpNode): Int {
+    private fun visitBinOp(node: BinOp): Int {
         if (node.op!!.type == ArithmeticOperators.PLUS) {
             return visit(node.left) + visit(node.right)
         } else if (node.op.type == ArithmeticOperators.MINUS) {
