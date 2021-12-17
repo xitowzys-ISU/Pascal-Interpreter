@@ -7,11 +7,19 @@
 реализовать выбор выходных данных: результат в виде словаря со значениями переменных или исходного дерева на основе
 которого считается выходной результат.
 
-Описание грамматики
+[Описание грамматики](https://gitlab.com/ISU-Applied-Computer-Science/5th-semester/theory-and-practice-of-programming-languages/Pascal-interpreter/-/blob/main/raw/pascal.pdf)
 
 Общие требования:
 
 * Должны быть написаны тесты для проверки всего кода
 * Код может быть реализовано на одном из языков: Kotlin, Rust или Python.
 
-Демонстрация работы: 
+## Демонстрация работы:
+
+| [Провека готовых программ](https://gitlab.com/ISU-Applied-Computer-Science/5th-semester/theory-and-practice-of-programming-languages/Pascal-interpreter/-/tree/main/res/examples-programs) | 
+| ----------- |
+| ![](https://gitlab.com/ISU-Applied-Computer-Science/5th-semester/theory-and-practice-of-programming-languages/Pascal-interpreter/-/raw/main/raw/demo_1.png?inline=false) | 
+
+| Coverage | 
+| ----------- |
+| ![](https://gitlab.com/ISU-Applied-Computer-Science/5th-semester/theory-and-practice-of-programming-languages/Pascal-interpreter/-/raw/main/raw/demo_2.png?inline=false) | 
