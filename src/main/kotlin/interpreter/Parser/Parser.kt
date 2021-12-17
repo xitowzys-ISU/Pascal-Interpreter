@@ -6,7 +6,6 @@ import interpreter.Lexer.Token.Enums.ArithmeticOperators
 import interpreter.Lexer.Token.Enums.General
 import interpreter.Lexer.Token.Enums.HardKeywords
 import interpreter.Lexer.Token.Enums.SpecialSymbols
-import interpreter.Parser.AST.*
 
 class Parser(text: String) {
     private var lexer: Lexer = Lexer(text)

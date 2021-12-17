@@ -1,4 +1,4 @@
-package interpreter.Parser.AST
+package interpreter.Parser
 
 import interpreter.Lexer.Token.Token
 

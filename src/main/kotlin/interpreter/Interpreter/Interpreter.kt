@@ -1,8 +1,7 @@
 package interpreter.Interpreter
 
 import interpreter.Lexer.Token.Enums.ArithmeticOperators
-import interpreter.Parser.AST.*
-import interpreter.Parser.Parser
+import interpreter.Parser.*
 
 class Interpreter(private val text: String) {
     private lateinit var parser: Parser
@@ -18,7 +17,7 @@ class Interpreter(private val text: String) {
                 return 0
             }
             "NoOp" -> {
-                visitNoOp(node as NoOp)
+                visitNoOp()
                 return 0
             }
             "Assign" -> {
@@ -37,7 +36,7 @@ class Interpreter(private val text: String) {
         }
     }
 
-    private fun visitNoOp(node: NoOp) {}
+    private fun visitNoOp() {}
 
     private fun visitAssign(node: Assign) {
         val varName: String? = node.left!!.op!!.value
@@ -49,11 +48,7 @@ class Interpreter(private val text: String) {
     private fun visitVar(node: Var): Any? {
         val varName: String? = node.op!!.value
         val vals = globalScope[varName]
-        if (vals == null) {
-            throw InterpreterException("Error interpreter")
-        } else {
-            return vals
-        }
+        return vals
 
     }
 

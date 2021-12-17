@@ -5,14 +5,22 @@ import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
+import utils.readAllCharsOneByOne
+import java.io.BufferedReader
+import java.io.File
+import java.io.FileReader
 
 internal class InterpreterTest {
 
     private lateinit var interpreter: Interpreter
 
+    private fun wrapPrograms(number: String): String = "BEGIN a := $number END."
+
+    private fun getVarInProgram() = interpreter.globalScope["a"]
+
     @Test
-    @DisplayName("interpret() `Single-line examples. With spaces. Plus and minus.`")
-    fun exprTestOne() {
+    @DisplayName("Single-line examples. With spaces. Plus and minus.")
+    fun testOne() {
         val listArithmeticOperators = listOf(
             ArithmeticOperators.PLUS,
             ArithmeticOperators.MINUS
@@ -36,14 +44,16 @@ internal class InterpreterTest {
                     (0..25).random()
                 )
 
-            interpreter = Interpreter(instance)
-            assertEquals(answer, interpreter.interpret())
+
+            interpreter = Interpreter(wrapPrograms(instance))
+            interpreter.interpret()
+            assertEquals(answer, getVarInProgram())
         }
     }
 
     @Test
-    @DisplayName("interpret() `Multi-line examples. With spaces. Plus and minus.`")
-    fun exprTestTwo() {
+    @DisplayName("Multi-line examples. With spaces. Plus and minus.")
+    fun testTwo() {
         val listArithmeticOperators = listOf(
             ArithmeticOperators.PLUS,
             ArithmeticOperators.MINUS
@@ -69,15 +79,16 @@ internal class InterpreterTest {
             }
 
 
-            interpreter = Interpreter(instance)
-            assertEquals(answer, interpreter.interpret())
+            interpreter = Interpreter(wrapPrograms(instance))
+            interpreter.interpret()
+            assertEquals(answer, getVarInProgram())
 
         }
     }
 
     @Test
-    @DisplayName("interpret() `Multi-line examples. With spaces. Multiplication and division.`")
-    fun exprTestThree() {
+    @DisplayName("Multi-line examples. With spaces. Multiplication and division.")
+    fun testThree() {
         val listArithmeticOperators = listOf(
             ArithmeticOperators.MUL,
             ArithmeticOperators.DIV
@@ -103,27 +114,31 @@ internal class InterpreterTest {
             }
 
 
-            interpreter = Interpreter(instance)
-            assertEquals(answer, interpreter.interpret())
+            interpreter = Interpreter(wrapPrograms(instance))
+            interpreter.interpret()
+            assertEquals(answer, getVarInProgram())
 
         }
     }
 
     @Test
-    @DisplayName("interpret() `Multi-line examples. With spaces. Plus, minus, multiplication, division, brackets.`")
-    fun exprTestFour() {
+    @DisplayName("Multi-line examples. With spaces. Plus, minus, multiplication, division, brackets.")
+    fun testFour() {
         assertAll({
             assertAll({
-                interpreter = Interpreter("(10 + 20) * 40 / (2 + 1)")
-                assertEquals(interpreter.interpret(), 400)
+                interpreter = Interpreter(wrapPrograms("(10 + 20) * 40 / (2 + 1)"))
+                interpreter.interpret()
+                assertEquals(400, getVarInProgram())
             })
             assertAll({
-                interpreter = Interpreter("2 / 2 - 2 + 3 * ((1 + 1) + (1 + 1))")
-                assertEquals(interpreter.interpret(), 11)
+                interpreter = Interpreter(wrapPrograms("2 / 2 - 2 + 3 * ((1 + 1) + (1 + 1))"))
+                interpreter.interpret()
+                assertEquals(11, getVarInProgram())
             })
             assertAll({
-                interpreter = Interpreter("(12 + 8) - 3")
-                assertEquals(interpreter.interpret(), 17)
+                interpreter = Interpreter(wrapPrograms("(12 + 8) - 3"))
+                interpreter.interpret()
+                assertEquals(17, getVarInProgram())
             })
         })
 
@@ -131,23 +146,71 @@ internal class InterpreterTest {
     }
 
     @Test
-    @DisplayName("interpret() `Multi-line examples. Unary operators`")
-    fun exprTestFive() {
+    @DisplayName("Multi-line examples. Unary operators")
+    fun testFive() {
         assertAll({
             assertAll({
-                interpreter = Interpreter("--(-10 + 20) * 40 / (2 + 1)")
-                assertEquals(interpreter.interpret(), 133)
+                interpreter = Interpreter(wrapPrograms("--(-10 + 20) * 40 / (2 + 1)"))
+                interpreter.interpret()
+                assertEquals(133, getVarInProgram())
             })
             assertAll({
-                interpreter = Interpreter("- --2 / 2 - 2 + 3 * ((1 + 1) + (1 + 1))")
-                assertEquals(interpreter.interpret(), 9)
+                interpreter = Interpreter(wrapPrograms("- --2 / 2 - 2 + 3 * ((1 + 1) + (1 + 1))"))
+                interpreter.interpret()
+                assertEquals(9, getVarInProgram())
             })
             assertAll({
-                interpreter = Interpreter("+-(12 + 8) - 3")
-                assertEquals(interpreter.interpret(), -23)
+                interpreter = Interpreter(wrapPrograms("+-(12 + 8) - 3"))
+                interpreter.interpret()
+                assertEquals(-23, getVarInProgram())
             })
         })
-
-
     }
+
+    @Test
+    @DisplayName("Program example_1.pas")
+    fun testSix() {
+        val answer = mapOf<String, Any>()
+
+        val file = File("./res/examples-programs/example_1.pas")
+        val reader = BufferedReader(FileReader(file))
+        val text = reader.readAllCharsOneByOne()
+
+        interpreter = Interpreter(text)
+
+        interpreter.interpret()
+        assertTrue(interpreter.globalScope == answer)
+    }
+
+    @Test
+    @DisplayName("Program example_2.pas")
+    fun testSeven() {
+        val answer = mapOf<String, Any>("x" to 17, "y" to 11)
+
+        val file = File("./res/examples-programs/example_2.pas")
+        val reader = BufferedReader(FileReader(file))
+        val text = reader.readAllCharsOneByOne()
+
+        interpreter = Interpreter(text)
+
+        interpreter.interpret()
+        assertTrue(interpreter.globalScope == answer)
+    }
+
+    @Test
+    @DisplayName("Program example_3.pas")
+    fun testEight() {
+        val answer = mapOf<String, Any>("y" to 2, "a" to 3, "b" to 18, "c" to -15, "x" to 11)
+
+        val file = File("./res/examples-programs/example_3.pas")
+        val reader = BufferedReader(FileReader(file))
+        val text = reader.readAllCharsOneByOne()
+
+        interpreter = Interpreter(text)
+
+        interpreter.interpret()
+        assertTrue(interpreter.globalScope == answer)
+    }
+
+
 }
