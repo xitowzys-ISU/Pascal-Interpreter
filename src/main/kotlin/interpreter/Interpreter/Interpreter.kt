@@ -1,6 +1,6 @@
 package interpreter.Interpreter
 
-import interpreter.Lexer.TokenType
+import interpreter.Lexer.Token.Enums.ArithmeticOperators
 import interpreter.Parser.BinOp.BinOp
 import interpreter.Parser.BinOp.BinOpNode
 import interpreter.Parser.BinOp.Num
@@ -25,11 +25,11 @@ class Interpreter(text: String) {
     }
 
     private fun visitBinOp(node: BinOpNode): Int {
-        if (node.op!!.type == TokenType.PLUS) {
+        if (node.op!!.type == ArithmeticOperators.PLUS) {
             return visit(node.left) + visit(node.right)
-        } else if (node.op.type == TokenType.MINUS) {
+        } else if (node.op.type == ArithmeticOperators.MINUS) {
             return visit(node.left) - visit(node.right)
-        } else if (node.op.type == TokenType.MUL) {
+        } else if (node.op.type == ArithmeticOperators.MUL) {
             return visit(node.left) * visit(node.right)
         }
 
@@ -37,7 +37,7 @@ class Interpreter(text: String) {
     }
 
     private fun visitUnaryOp(node: UnaryOp): Int {
-        if (node.op!!.type == TokenType.PLUS) {
+        if (node.op!!.type == ArithmeticOperators.PLUS) {
             return +visit(node.expr)
         }
 

@@ -1,6 +1,6 @@
 package interpreter.Interpreter
 
-import interpreter.Lexer.TokenType
+import interpreter.Lexer.Token.Enums.ArithmeticOperators
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
@@ -13,19 +13,19 @@ internal class InterpreterTest {
     @Test
     @DisplayName("interpret() `Single-line examples. With spaces. Plus and minus.`")
     fun exprTestOne() {
-        val listTokenType = listOf(
-            TokenType.PLUS,
-            TokenType.MINUS
+        val listArithmeticOperators = listOf(
+            ArithmeticOperators.PLUS,
+            ArithmeticOperators.MINUS
         )
 
         for (i in 0..100) {
             val firstNumber = (0..99999).random()
             val secondNumber = (0..99999).random()
-            val type = listTokenType.random()
+            val type = listArithmeticOperators.random()
 
             val answer = when (type) {
-                TokenType.PLUS -> firstNumber + secondNumber
-                TokenType.MINUS -> firstNumber - secondNumber
+                ArithmeticOperators.PLUS -> firstNumber + secondNumber
+                ArithmeticOperators.MINUS -> firstNumber - secondNumber
                 else -> {
                     0
                 }
@@ -44,9 +44,9 @@ internal class InterpreterTest {
     @Test
     @DisplayName("interpret() `Multi-line examples. With spaces. Plus and minus.`")
     fun exprTestTwo() {
-        val listTokenType = listOf(
-            TokenType.PLUS,
-            TokenType.MINUS
+        val listArithmeticOperators = listOf(
+            ArithmeticOperators.PLUS,
+            ArithmeticOperators.MINUS
         )
 
         for (i in 0..100) {
@@ -54,12 +54,12 @@ internal class InterpreterTest {
             var instance: String = answer.toString() + " ".repeat((0..25).random())
 
             for (j in 0..20) {
-                val type = listTokenType.random()
+                val type = listArithmeticOperators.random()
                 val number = (0..99999).random()
 
                 answer = when (type) {
-                    TokenType.PLUS -> answer + number
-                    TokenType.MINUS -> answer - number
+                    ArithmeticOperators.PLUS -> answer + number
+                    ArithmeticOperators.MINUS -> answer - number
                     else -> {
                         0
                     }
@@ -78,9 +78,9 @@ internal class InterpreterTest {
     @Test
     @DisplayName("interpret() `Multi-line examples. With spaces. Multiplication and division.`")
     fun exprTestThree() {
-        val listTokenType = listOf(
-            TokenType.MUL,
-            TokenType.DIV
+        val listArithmeticOperators = listOf(
+            ArithmeticOperators.MUL,
+            ArithmeticOperators.DIV
         )
 
         for (i in 0..100) {
@@ -88,12 +88,12 @@ internal class InterpreterTest {
             var instance: String = answer.toString() + " ".repeat((0..25).random())
 
             for (j in 0..5) {
-                val type = listTokenType.random()
+                val type = listArithmeticOperators.random()
                 val number = (1..500).random()
 
                 answer = when (type) {
-                    TokenType.MUL -> answer * number
-                    TokenType.DIV -> answer / number
+                    ArithmeticOperators.MUL -> answer * number
+                    ArithmeticOperators.DIV -> answer / number
                     else -> {
                         0
                     }

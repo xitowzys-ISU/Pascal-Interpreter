@@ -1,8 +1,8 @@
 package interpreter.Parser
 
 import interpreter.Lexer.Lexer
-import interpreter.Lexer.Token
-import interpreter.Lexer.TokenType
+import interpreter.Lexer.Token.Token
+import interpreter.Lexer.Token.Enums.ArithmeticOperators
 import interpreter.Parser.BinOp.BinOp
 import interpreter.Parser.BinOp.BinOpNode
 import interpreter.Parser.BinOp.Num
@@ -24,19 +24,19 @@ class Parser(text: String) {
     private fun factor(): BinOp {
         val token = currentToken
 
-        if (token!!.type == TokenType.PLUS) {
+        if (token!!.type == ArithmeticOperators.PLUS) {
             eat()
             val node = UnaryOp(token, factor())
             return node
         }
 
-        if (token!!.type == TokenType.MINUS) {
+        if (token!!.type == ArithmeticOperators.MINUS) {
             eat()
             val node = UnaryOp(token, factor())
             return node
         }
 
-        if (token!!.type == TokenType.LPAREN) {
+        if (token!!.type == ArithmeticOperators.LPAREN) {
             eat()
             val node = expr()
             eat()
@@ -53,14 +53,14 @@ class Parser(text: String) {
     private fun term(): BinOp {
         var node: BinOp = factor()
 
-        while (currentToken!!.type == TokenType.MUL || currentToken!!.type == TokenType.DIV) {
+        while (currentToken!!.type == ArithmeticOperators.MUL || currentToken!!.type == ArithmeticOperators.DIV) {
             val token = currentToken
 
             when (token!!.type) {
-                TokenType.MUL -> {
+                ArithmeticOperators.MUL -> {
                     eat()
                 }
-                TokenType.DIV -> {
+                ArithmeticOperators.DIV -> {
                     eat()
                 }
                 else -> {
@@ -81,14 +81,14 @@ class Parser(text: String) {
 
         var node: BinOp = term()
 
-        while (currentToken!!.type == TokenType.PLUS || currentToken!!.type == TokenType.MINUS) {
+        while (currentToken!!.type == ArithmeticOperators.PLUS || currentToken!!.type == ArithmeticOperators.MINUS) {
             val token = currentToken
 
             when (token!!.type) {
-                TokenType.PLUS -> {
+                ArithmeticOperators.PLUS -> {
                     eat()
                 }
-                TokenType.MINUS -> {
+                ArithmeticOperators.MINUS -> {
                     eat()
                 }
                 else -> {

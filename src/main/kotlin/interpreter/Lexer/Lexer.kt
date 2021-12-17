@@ -1,54 +1,104 @@
 package interpreter.Lexer
 
-class Lexer(val text: String) {
+import interpreter.Lexer.Token.Enums.ArithmeticOperators
+import interpreter.Lexer.Token.Enums.General
+import interpreter.Lexer.Token.Enums.HardKeywords
+import interpreter.Lexer.Token.Enums.SpecialSymbols
+import interpreter.Lexer.Token.Token
+
+class Lexer(private val text: String) {
 
     private var pos: Int = 0
     private var currentChar: Char? = text[pos]
 
+    /**
+     * Handle identifiers and reserved keywords
+     */
+    private fun id(): Token {
+        var result = ""
+        while (currentChar != null && currentChar!!.isLetter()) {
+            result += currentChar
+            advance()
+        }
+
+
+        return try {
+            Token(HardKeywords.valueOf(result), HardKeywords.valueOf(result).value)
+        } catch (e: IllegalArgumentException) {
+            Token(General.ID, result)
+        }
+    }
+
+    private fun peek(): Char? {
+        val peekPos = pos++
+        return if (peekPos > text.length - 1) null else text[pos]
+    }
+
     fun getNextToken(): Token? {
 
         while (currentChar != null) {
+
+            if (currentChar!!.isLetter()) {
+                return id()
+            }
+
+            if (currentChar == ':' && peek() == '=') {
+                advance()
+                advance()
+                return Token(SpecialSymbols.ASSIGN, SpecialSymbols.ASSIGN.value)
+            }
+
+            if (currentChar == ';') {
+                advance()
+                return Token(SpecialSymbols.SEMI, SpecialSymbols.SEMI.value)
+            }
+
+            if (currentChar == '.') {
+                advance()
+                return Token(SpecialSymbols.DOT, SpecialSymbols.DOT.value)
+            }
+
             if (currentChar!!.isWhitespace()) {
                 skipWhitespace()
                 continue
             }
 
-            if (currentChar!!.isDigit()) return Token(TokenType.INTENGER, integer())
+            if (currentChar!!.isDigit()) return Token(ArithmeticOperators.INTENGER, integer())
 
             if (currentChar == '+') {
                 advance()
-                return Token(TokenType.PLUS, TokenType.PLUS.value)
+                return Token(ArithmeticOperators.PLUS, ArithmeticOperators.PLUS.value)
             }
 
             if (currentChar == '*') {
                 advance()
-                return Token(TokenType.MUL, TokenType.MUL.value)
+                return Token(ArithmeticOperators.MUL, ArithmeticOperators.MUL.value)
             }
 
             if (currentChar == '/') {
                 advance()
-                return Token(TokenType.DIV, TokenType.DIV.value)
+                return Token(ArithmeticOperators.DIV, ArithmeticOperators.DIV.value)
             }
 
             if (currentChar == '-') {
                 advance()
-                return Token(TokenType.MINUS, TokenType.MINUS.value)
+                return Token(ArithmeticOperators.MINUS, ArithmeticOperators.MINUS.value)
             }
 
             if (currentChar == '(') {
                 advance()
-                return Token(TokenType.LPAREN, TokenType.LPAREN.value)
+                return Token(ArithmeticOperators.LPAREN, ArithmeticOperators.LPAREN.value)
             }
 
             if (currentChar == ')') {
                 advance()
-                return Token(TokenType.RPAREN, TokenType.RPAREN.value)
+                return Token(ArithmeticOperators.RPAREN, ArithmeticOperators.RPAREN.value)
             }
 
             return null
         }
 
-        return Token(TokenType.EOS, TokenType.EOS.value)
+        return Token(ArithmeticOperators.EOS, ArithmeticOperators.EOS.value)
     }
 
     private fun skipWhitespace() {
