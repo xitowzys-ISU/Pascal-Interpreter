@@ -40,4 +40,5 @@ fun main() {
                 "END."
     )
     interpreter.interpret()
+    print(interpreter.globalScope)
 }
