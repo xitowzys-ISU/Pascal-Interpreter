@@ -1,7 +1,6 @@
 package interpreter.Lexer
 
-import interpreter.Lexer.Lexer
-import interpreter.Lexer.TokenType
+import interpreter.Lexer.Token.Enums.ArithmeticOperators
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -15,22 +14,22 @@ class LexerTest {
         Assertions.assertAll({
             Assertions.assertAll({
                 val token = laxer.getNextToken()
-                Assertions.assertEquals(TokenType.INTENGER, token!!.type)
+                Assertions.assertEquals(ArithmeticOperators.INTENGER, token!!.type)
                 Assertions.assertEquals("3", token.value)
             })
             Assertions.assertAll({
                 val token = laxer.getNextToken()
-                Assertions.assertEquals(TokenType.PLUS, token!!.type)
+                Assertions.assertEquals(ArithmeticOperators.PLUS, token!!.type)
                 Assertions.assertEquals("+", token.value)
             })
             Assertions.assertAll({
                 val token = laxer.getNextToken()
-                Assertions.assertEquals(TokenType.INTENGER, token!!.type)
+                Assertions.assertEquals(ArithmeticOperators.INTENGER, token!!.type)
                 Assertions.assertEquals("5", token.value)
             })
             Assertions.assertAll({
                 val token = laxer.getNextToken()
-                Assertions.assertEquals(TokenType.EOS, token!!.type)
+                Assertions.assertEquals(ArithmeticOperators.EOS, token!!.type)
                 Assertions.assertNull(null)
             })
         })
@@ -44,32 +43,32 @@ class LexerTest {
         Assertions.assertAll({
             Assertions.assertAll({
                 val token = laxer.getNextToken()
-                Assertions.assertEquals(TokenType.INTENGER, token!!.type)
+                Assertions.assertEquals(ArithmeticOperators.INTENGER, token!!.type)
                 Assertions.assertEquals("7", token.value)
             })
             Assertions.assertAll({
                 val token = laxer.getNextToken()
-                Assertions.assertEquals(TokenType.MUL, token!!.type)
+                Assertions.assertEquals(ArithmeticOperators.MUL, token!!.type)
                 Assertions.assertEquals("*", token.value)
             })
             Assertions.assertAll({
                 val token = laxer.getNextToken()
-                Assertions.assertEquals(TokenType.INTENGER, token!!.type)
+                Assertions.assertEquals(ArithmeticOperators.INTENGER, token!!.type)
                 Assertions.assertEquals("5", token.value)
             })
             Assertions.assertAll({
                 val token = laxer.getNextToken()
-                Assertions.assertEquals(TokenType.DIV, token!!.type)
+                Assertions.assertEquals(ArithmeticOperators.DIV, token!!.type)
                 Assertions.assertEquals("/", token.value)
             })
             Assertions.assertAll({
                 val token = laxer.getNextToken()
-                Assertions.assertEquals(TokenType.INTENGER, token!!.type)
+                Assertions.assertEquals(ArithmeticOperators.INTENGER, token!!.type)
                 Assertions.assertEquals("3", token.value)
             })
             Assertions.assertAll({
                 val token = laxer.getNextToken()
-                Assertions.assertEquals(TokenType.EOS, token!!.type)
+                Assertions.assertEquals(ArithmeticOperators.EOS, token!!.type)
                 Assertions.assertNull(null)
             })
         })

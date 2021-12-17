@@ -14,6 +14,7 @@ repositories {
 
 dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test:1.6.0")
+    testImplementation("com.github.stefanbirkner:system-lambda:1.2.0")
 }
 
 tasks.test {

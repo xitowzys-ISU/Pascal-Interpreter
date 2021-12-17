@@ -1,21 +1,49 @@
 import interpreter.Interpreter.Interpreter
+import utils.readAllCharsOneByOne
+import utils.searchFileExtension
+import java.io.BufferedReader
+import java.io.File
+import java.io.FileReader
+
+fun printAsciiArt() {
+    val file = File("./res/askii-art/art.txt")
+    val reader = BufferedReader(FileReader(file))
+    val text = reader.readAllCharsOneByOne()
+    println(text)
+}
 
 fun main() {
-    var text: String?
+
     var interpreter: Interpreter
-    var result: Int
+
+    printAsciiArt()
+
+    val file = File("./res/examples-programs")
+
+    val fileList: ArrayList<String> = file.searchFileExtension("pas")
+
+    for ((key, value) in fileList.withIndex()) {
+        println("#$key -> $value")
+    }
 
     while (true) {
-        print("cal> ")
-        text = readLine()
-        if (text.isNullOrEmpty()) {
+        print("Введите номер файла: ")
+        val fileNumber = readLine()
+
+        if (fileNumber.isNullOrEmpty()) {
             continue
         } else {
+            val fileNumberInt = fileNumber.toInt()
+            val file = File("./res/examples-programs/${fileList[fileNumberInt]}")
+            val reader = BufferedReader(FileReader(file))
+            val text = reader.readAllCharsOneByOne()
+
             interpreter = Interpreter(text)
-            result = interpreter.interpret()
-            println(result)
+
+            interpreter.interpret()
+
+            println(interpreter.globalScope)
         }
+        // TODO: Добавить обработку исключения IndexOutOfBoundsException
     }
-//    interpreter = Interpreter("1+2+5 * 12")
-//    interpreter.interpret()
 }

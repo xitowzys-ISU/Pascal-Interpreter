@@ -11,11 +11,11 @@ class ParserTest {
     @Test
     @DisplayName("eat() `Exception error parsing input.`")
     fun exceptionEat() {
-        parser = Parser("3_5")
+        parser = Parser("BEGIN a:= 3_5 END.")
         val exception: Exception = Assertions.assertThrows(ParserException::class.java) {
             parser.parse()
         }
 
-        Assertions.assertEquals("Error parsing input", exception.message)
+        Assertions.assertEquals("Error parsing", exception.message)
     }
 }
