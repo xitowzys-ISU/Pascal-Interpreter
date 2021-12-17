@@ -1,3 +1,5 @@
 package interpreter.Parser.AST
 
-class Compound(val children: ArrayList<AST>) : AST(null, null, null)
+class Compound() : AST(null, null, null) {
+    val children: ArrayList<AST> = arrayListOf()
+}

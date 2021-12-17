@@ -7,8 +7,8 @@ import interpreter.Parser.AST.Num
 import interpreter.Parser.AST.UnaryOp
 import interpreter.Parser.Parser
 
-class Interpreter(text: String) {
-    private var parser: Parser = Parser(text)
+class Interpreter(private val text: String) {
+    private lateinit var parser: Parser
 
     private fun visit(node: AST?): Int {
 
@@ -49,6 +49,7 @@ class Interpreter(text: String) {
     }
 
     fun interpret(): Int {
+        parser = Parser(text)
         val tree = parser.parse()
         return visit(tree)
     }
