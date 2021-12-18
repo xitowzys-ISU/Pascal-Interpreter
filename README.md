@@ -16,7 +16,7 @@
 
 ## Демонстрация работы:
 
-| [Провека готовых программ](https://gitlab.com/ISU-Applied-Computer-Science/5th-semester/theory-and-practice-of-programming-languages/Pascal-interpreter/-/tree/main/res/examples-programs) | 
+| [Проверка готовых программ](https://gitlab.com/ISU-Applied-Computer-Science/5th-semester/theory-and-practice-of-programming-languages/Pascal-interpreter/-/tree/main/res/examples-programs) | 
 | ----------- |
 | ![](https://gitlab.com/ISU-Applied-Computer-Science/5th-semester/theory-and-practice-of-programming-languages/Pascal-interpreter/-/raw/main/raw/demo_1.png?inline=false) | 
 
