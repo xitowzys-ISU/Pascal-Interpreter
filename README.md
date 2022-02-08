@@ -7,7 +7,7 @@
 реализовать выбор выходных данных: результат в виде словаря со значениями переменных или исходного дерева на основе
 которого считается выходной результат.
 
-[Описание грамматики](https://gitlab.com/ISU-Applied-Computer-Science/5th-semester/theory-and-practice-of-programming-languages/Pascal-interpreter/-/blob/main/raw/pascal.pdf)
+[Описание грамматики](/raw/pascal.pdf)
 
 Общие требования:
 
@@ -16,10 +16,10 @@
 
 ## Демонстрация работы:
 
-| [Проверка готовых программ](https://gitlab.com/ISU-Applied-Computer-Science/5th-semester/theory-and-practice-of-programming-languages/Pascal-interpreter/-/tree/main/res/examples-programs) | 
+| [Проверка готовых программ](/res/examples-programs) | 
 | ----------- |
-| ![](https://gitlab.com/ISU-Applied-Computer-Science/5th-semester/theory-and-practice-of-programming-languages/Pascal-interpreter/-/raw/main/raw/demo_1.png?inline=false) | 
+| ![](/raw/demo_1.png) | 
 
 | Coverage | 
 | ----------- |
-| ![](https://gitlab.com/ISU-Applied-Computer-Science/5th-semester/theory-and-practice-of-programming-languages/Pascal-interpreter/-/raw/main/raw/demo_2.png?inline=false) | 
+| ![](/raw/demo_2.png) | 
